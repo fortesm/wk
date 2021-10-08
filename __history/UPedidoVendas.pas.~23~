@@ -1,0 +1,66 @@
+﻿unit UPedidoVendas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.Character, Vcl.Buttons, Vcl.Grids
+  ;
+
+type
+  TFrmPedidoVendas = class(TForm)
+    GroupBox1: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    StringGrid: TStringGrid;
+    LbSubTotal: TLabel;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmPedidoVendas: TFrmPedidoVendas;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmPedidoVendas.FormCreate(Sender: TObject);
+begin
+  StringGrid.ColWidths[0] := 64;
+  StringGrid.ColWidths[1] := 650;
+  StringGrid.ColWidths[2] := 70;
+
+  StringGrid.Cells[0, 0] := 'Cod';
+  StringGrid.Cells[1, 0] := 'Produto';
+  StringGrid.Cells[2, 0] := 'Valor';
+  StringGrid.Cells[3, 0] := 'Total';
+end;
+
+procedure TFrmPedidoVendas.SpeedButton1Click(Sender: TObject);
+begin
+  var Retorno : Integer;
+  var InputStr := InputBox('buscar produto', 'Digite o código ou nome do produto','');
+
+  if TryStrToInt(InputStr, Retorno) then
+     // busca pelo código do produto
+  else
+     // busca pela descrição do produto
+end;
+
+procedure TFrmPedidoVendas.SpeedButton2Click(Sender: TObject);
+begin
+  // insere produto na grid
+  StringGrid.RowCount := StringGrid.RowCount + 1;
+end;
+
+end.

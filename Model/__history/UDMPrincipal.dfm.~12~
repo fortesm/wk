@@ -1,0 +1,80 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 212
+  Width = 352
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'Database=wksistemas'
+      'User_Name=root'
+      'Password=wksistemas'
+      'Server=localhost'
+      'DriverID=MySQL')
+    Connected = True
+    LoginPrompt = False
+    Left = 72
+    Top = 40
+  end
+  object FDTransaction: TFDTransaction
+    Connection = FDConnection
+    Left = 112
+    Top = 136
+  end
+  object FDGUIxWaitCursor: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 32
+    Top = 128
+  end
+  object FDPhysMySQLDriverLink: TFDPhysMySQLDriverLink
+    VendorLib = 'C:\Projetos\Projeto WK\LibMySQL\libmysql.dll'
+    Left = 216
+    Top = 144
+  end
+  object QryPedidoM: TFDQuery
+    Connection = FDConnection
+    Transaction = FDTransaction
+    UpdateTransaction = FDTransaction
+    SQL.Strings = (
+      ' SELECT '
+      '     NumPedido, '
+      '      DataEmisao, '
+      '      FkCodCli, '
+      '     ValorTotal '
+      'FROM '
+      '   pedidosdadosgerais WHERE NumPedido = :pNumPed')
+    Left = 272
+    Top = 32
+    ParamData = <
+      item
+        Name = 'PNUMPED'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object QryPedidoD: TFDQuery
+    Active = True
+    MasterSource = FrmManutPedidos.DSMas
+    Connection = FDConnection
+    Transaction = FDTransaction
+    UpdateTransaction = FDTransaction
+    SQL.Strings = (
+      ''
+      '     SELECT '
+      '     Autoincrem, '
+      '     FkNumeroPedido, '
+      '     FkCodProd, '
+      '     Qtd, '
+      '     VlrUnitario, '
+      '     VlrTotal '
+      
+        '     FROM   pedidosprodutos  WHERE  FkNumeroPedido  =  :NumPedid' +
+        'o ')
+    Left = 288
+    Top = 96
+    ParamData = <
+      item
+        Name = 'NUMPEDIDO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+end

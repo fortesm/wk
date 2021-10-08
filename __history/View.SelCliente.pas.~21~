@@ -1,0 +1,72 @@
+﻿unit View.SelCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons;
+
+type
+  TFrmSelCliente = class(TForm)
+    LbNomeCliente: TLabel;
+    GroupBox1: TGroupBox;
+    EdCodCli: TLabeledEdit;
+    BtBuscaCli: TBitBtn;
+    BTFazerPedido: TBitBtn;
+    procedure BtBuscaCliClick(Sender: TObject);
+    procedure BTFazerPedidoClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    Achou : Boolean;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmSelCliente: TFrmSelCliente;
+
+implementation
+
+{$R *.dfm}
+
+uses Consultas, View.PedidoVendas;
+
+procedure TFrmSelCliente.FormCreate(Sender: TObject);
+begin Achou := False; end;
+
+procedure TFrmSelCliente.BtBuscaCliClick(Sender: TObject);
+var Cons : TConsulta;
+    Cliente : TStringList;
+begin
+  Cons := TConsulta.Create;
+  Cliente := TStringList.Create;
+  try
+    Cliente := Cons.SelectCliente(Trim(EdCodCli.Text));
+    if Cliente.Count <> 0 then begin
+       Achou := True;
+       LbNomeCliente.Caption  := Cliente[1]; end
+    else begin
+       Achou  := False;
+       EdCodCli.Clear;
+       EdCodCli.SetFocus;
+    end;
+  finally
+    FreeAndNil(Cons);
+    FreeAndNil(Cliente);
+  end;
+end;
+
+
+procedure TFrmSelCliente.BTFazerPedidoClick(Sender: TObject);
+begin
+   if Achou then begin
+      with FrmPedidoVendas do begin
+           LbCodCli.Caption := Trim(EdCodCli.Text);
+           LbCliente.Caption := LbNomeCliente.Caption;
+           ShowModal;
+      end;
+   end;
+end;
+
+end.

@@ -1,0 +1,22 @@
+﻿program ProjWK;
+
+uses
+  Vcl.Forms,
+  View.Principal in 'View.Principal.pas' {FrmPrincipal},
+  UDMPrincipal in 'Model\UDMPrincipal.pas' {DM: TDataModule},
+  View.PedidoVendas in 'View.PedidoVendas.pas' {FrmPedidoVendas},
+  Consultas in 'Model\Consultas.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmPrincipal, FrmPrincipal);
+  Application.CreateForm(TFrmPedidoVendas, FrmPedidoVendas);
+  Application.CreateForm(TFrmPedidoVendas, FrmPedidoVendas);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFrmPedidoVendas, FrmPedidoVendas);
+  Application.Run;
+end.

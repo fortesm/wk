@@ -1,0 +1,25 @@
+﻿unit UConsultas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.Character;
+
+type
+  TConsulta = class(TObject)
+
+    LabeledEdit1: TLabeledEdit;
+
+    procedure StringGridSetEditText(Sender: TObject; ACol, ARow: Integer;
+      const Value: string);
+  private
+   // Private
+  public
+    // Publico
+  end;
+
+implementation
+
+end.

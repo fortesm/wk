@@ -1,0 +1,29 @@
+object FrmPrincipal: TFrmPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Sistema WK'
+  ClientHeight = 259
+  ClientWidth = 560
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = MainMenu
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object MainMenu: TMainMenu
+    Left = 416
+    Top = 152
+    object Vendas1: TMenuItem
+      Caption = 'Vendas'
+      object PedidodeVendas1: TMenuItem
+        Caption = 'Pedido de Ve&ndas'
+        OnClick = PedidodeVendas1Click
+      end
+    end
+  end
+end
