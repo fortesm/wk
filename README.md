@@ -8,3 +8,5 @@ Este é o projeto de Teste de software para a WK Sistemas, por Marcelo Fortes
 - A classe TConsulta está na camada Mode.
 - Para manter a simplicidade (KISS), não foram criadas classes de domínio que representam os pedidos, com sua respectivas interfaces sendo implementada numa classe concreta fazendo composição de interface, já que não é possível usar nenhum tipo de biblioteca de Mapeamento Objeto Relacional.
 - O projeto possibilita a extensão dom classes de domínio.
+
+![alt text](https://github.com/fortesm/wk/doc/img/img.png)
