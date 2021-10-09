@@ -10,4 +10,5 @@ Este é o projeto de Teste de software para a WK Sistemas, por Marcelo Fortes
 - O projeto possibilita a extensão dom classes de domínio.
 
 ![alt text](https://github.com/fortesm/wk/doc/img/db.png)
-![alt text](https://github.com/[username]/fortesm/wk/doc/img/db.png?raw=true)
+![alt text](https://github.com/fortesm/wk/doc/img/db.png?raw=true)
+https://github.com/fortesm/wk/tree/master/doc/img
