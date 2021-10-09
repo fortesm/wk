@@ -9,6 +9,4 @@ Este é o projeto de Teste de software para a WK Sistemas, por Marcelo Fortes
 - Para manter a simplicidade (KISS), não foram criadas classes de domínio que representam os pedidos, com sua respectivas interfaces sendo implementada numa classe concreta fazendo composição de interface, já que não é possível usar nenhum tipo de biblioteca de Mapeamento Objeto Relacional.
 - O projeto possibilita a extensão dom classes de domínio.
 
-![Imaget](https://github.com/fortesm/wk/doc/img/db.png)
-![aImage](https://github.com/fortesm/wk/tree/master/doc/img/db.png?raw=true)
-![Image](../main/fortesm/wk/doc/img/db.png)
+![db](https://user-images.githubusercontent.com/58529630/136639109-0678c40b-ef95-47b1-8d9b-41b428b54537.png)
