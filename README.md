@@ -11,4 +11,4 @@ Este é o projeto de Teste de software para a WK Sistemas, por Marcelo Fortes
 
 ![Imaget](https://github.com/fortesm/wk/doc/img/db.png)
 ![aImage](https://github.com/fortesm/wk/tree/master/doc/img/db.png?raw=true)
-![Image](../master/fortesm/wk/doc/img/db.png)
+![Image](../main/fortesm/wk/doc/img/db.png)
