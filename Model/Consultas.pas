@@ -74,7 +74,6 @@ begin
      QryGetId.SQl.Add('Select Last_Insert_Id() as NumPedido'); // Select MAX(NumPedido) as NumPedido FROM pedidosdadosgerais
      QryGetId.Open;
      LastId := QryGetId.FieldByName('NumPedido').AsInteger;
-     ShowMessage(IntToStr(LastId));
 
      // Query Detalhes do pedido   =======================================
      for var i := 1 to FrmPedidoVendas.StringGrid.RowCount -1 do
@@ -147,15 +146,20 @@ end;
 function TConsulta.SelectProd(Prod : string) :TStringlist ;
 var
   FDSelQry : TFDQuery;
-  SQLSelProd : String;
+  SQLSelProd, Campo : String;
   Produto : TStringList;
+  Retorno : Integer;
 begin
   Produto := TStringList.Create;
 
-  SQLSelProd := '';
-  SQLSelProd := 'SELECT PkCodProd, Descricao, FORMAT(PrecoVenda,2,''de_DE'') AS PrecoVenda FROM Produtos WHERE Descricao = ' + QuotedStr(Trim(Prod));
-  FDSelQry := TFDQuery.Create(nil);
+  if TryStrToInt(Prod, Retorno) then
+       Campo :=  'PkCodProd'
+  else
+       Campo :=  'Descricao';
 
+  SQLSelProd := '';
+  SQLSelProd := 'SELECT PkCodProd, Descricao, FORMAT(PrecoVenda,2,''de_DE'') AS PrecoVenda FROM Produtos WHERE ' + Campo + ' = ' + QuotedStr(Trim(Prod));
+  FDSelQry := TFDQuery.Create(nil);
   try
     FDSelQry.Connection:= DM.FDConnection;
     FDSelQry.SQL.Clear;
