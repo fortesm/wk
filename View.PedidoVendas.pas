@@ -69,30 +69,22 @@ end;
 procedure TFrmPedidoVendas.BtBuscaProdClick(Sender: TObject);
 begin
   var produto : TStringList;
-  var Retorno : Integer;
   var InputStr := InputBox('buscar produto', 'Digite o código ou nome do produto','');
   var cons : TConsulta;
 
-  if TryStrToInt(InputStr, Retorno) then
-     begin
-     // busca pelo código do produto
-     end
-  else
-     begin
-        Cons := TConsulta.Create;   // Instancia o objeto que retorna os registros dos produtos
-        Produto := TStringList.Create;
-        try
-          Produto := Cons.SelectProd(InputStr);
-          if produto.Count <> 0 then begin
-            EdCod.Text   := Produto[0];
-            EdDesc.Text  := Produto[1];
-            EdPreco.Text := Produto[2];
-          end;
-        finally
-          FreeAndNil(cons);
-          FreeAndNil(Produto);
-        end;
-     end;
+  Cons := TConsulta.Create;   // Instancia o objeto que retorna os registros dos produtos
+  Produto := TStringList.Create;
+  try
+    Produto := Cons.SelectProd(InputStr);
+    if produto.Count <> 0 then begin
+      EdCod.Text   := Produto[0];
+      EdDesc.Text  := Produto[1];
+      EdPreco.Text := Produto[2];
+    end;
+  finally
+    FreeAndNil(cons);
+    FreeAndNil(Produto);
+  end;
 end;
 
 procedure TFrmPedidoVendas.BtInsereProdClick(Sender: TObject);
