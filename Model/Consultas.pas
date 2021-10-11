@@ -47,7 +47,7 @@ begin
    FDInsQry.Connection := DM.FDConnection;
    FDInsQryDet.Connection :=  DM.FDConnection;
    QryGetId .Connection :=  DM.FDConnection;
-  // DM.FDConnection.StartTransaction;
+   DM.FDConnection.StartTransaction;
    try
      // Query pedido
      Str.Clear;
@@ -68,16 +68,15 @@ begin
      FDInsQry.ParamByName('pFkCodCli').AsInteger := CodCli;
      FDInsQry.ParamByName('pValorTotal').AsCurrency := VTotal;
 
-     //FDInsQry.SQL.SaveToFile('C:\Projetos\Projeto WK\Win32\Debug\Teste.sql');
      FDInsQry.ExecSQL;
 
      QryGetId.SQl.Clear;
-     QryGetId.SQl.Add('Select Last_Insert_Id() as NumPedido');    //Select Last_Insert_Id() as NumPedido   // Select MAX(NumPedido) as NumPedido FROM pedidosdadosgerais
+     QryGetId.SQl.Add('Select Last_Insert_Id() as NumPedido'); // Select MAX(NumPedido) as NumPedido FROM pedidosdadosgerais
      QryGetId.Open;
      LastId := QryGetId.FieldByName('NumPedido').AsInteger;
+     ShowMessage(IntToStr(LastId));
 
-     //================================================================
-     // Query Detalhes do pedido
+     // Query Detalhes do pedido   =======================================
      for var i := 1 to FrmPedidoVendas.StringGrid.RowCount -1 do
      begin
          Str.Clear;
@@ -106,15 +105,14 @@ begin
 
          FDInsQryDet.ExecSQL;
      end;
-    // DM.FDConnection.Commit;
+     DM.FDConnection.Commit;
      Result := True;
    except
-   //  DM.FDConnection.Rollback;
+     DM.FDConnection.Rollback;
      raise;
      Result := False;
    end;
 end;
-
 
 function TConsulta.SelectCliente(CodCli: string): TStringlist;
 var
