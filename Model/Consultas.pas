@@ -150,6 +150,7 @@ var
   Produto : TStringList;
   Retorno : Integer;
 begin
+  Campo  := '';
   Produto := TStringList.Create;
 
   if TryStrToInt(Prod, Retorno) then
