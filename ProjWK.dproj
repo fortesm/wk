@@ -104,11 +104,6 @@
             <Form>FrmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="View.PedidoVendas.pas">
-            <Form>FrmPedidoVendas</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="Model\Consultas.pas"/>
         <DCCReference Include="Model\UDMPrincipal.pas">
             <Form>DM</Form>
             <FormType>dfm</FormType>
@@ -122,6 +117,14 @@
             <Form>FrmManutPedidos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Model\ClassProdutos.pas"/>
+        <DCCReference Include="Model\ClassClientes.pas"/>
+        <DCCReference Include="View.PedidoVendas.pas">
+            <Form>FrmPedidoVendas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Model\ClassPedidos.pas"/>
+        <None Include="ProjWK.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -143,11 +146,20 @@
                     <Source Name="MainSource">ProjWK.dpr</Source>
                 </Source>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\dclIntraweb_15_D10_4.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\dclIntraweb_15_D10_4.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\dclIWBootstrapD104.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\dclIWBootstrapD104.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\dclIWBootstrap4D104.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\dclIWBootstrap4D104.bpl not found</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k270.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp270.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="ProjWK.todo" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win32\Release\ProjWK.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ProjWK.exe</RemoteName>
