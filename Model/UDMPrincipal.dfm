@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 212
-  Width = 352
+  Height = 254
+  Width = 426
   object FDConnection: TFDConnection
     Params.Strings = (
       'Database=wksistemas'
@@ -16,95 +16,86 @@ object DM: TDM
   end
   object FDTransaction: TFDTransaction
     Connection = FDConnection
-    Left = 112
-    Top = 136
+    Left = 72
+    Top = 88
   end
   object FDGUIxWaitCursor: TFDGUIxWaitCursor
     Provider = 'Forms'
-    Left = 32
-    Top = 128
+    Left = 72
+    Top = 136
   end
   object FDPhysMySQLDriverLink: TFDPhysMySQLDriverLink
     VendorLib = 'C:\Projetos\Projeto WK\LibMySQL\libmysql.dll'
-    Left = 216
-    Top = 144
+    Left = 72
+    Top = 192
   end
   object QryPedidoM: TFDQuery
+    Active = True
     Connection = FDConnection
     Transaction = FDTransaction
     UpdateTransaction = FDTransaction
-    Left = 272
+    SQL.Strings = (
+      'SELECT'
+      '  P.NumPedido, '
+      '  C.PKCodCli,'
+      '  C.nome As Cliente,'
+      '  P.DataEmisao As Emiss'#227'o,'
+      '  P.ValorTotal As Total'
+      'FROM '
+      '  pedidosdadosgerais P'
+      'INNER JOIN clientes C ON (P.FkCodCli = C.PKCodCli)'
+      '-- WHERE P.NumPedido = :pNumPed')
+    Left = 288
     Top = 32
-    object QryPedidoMNumPedido: TLargeintField
-      AutoGenerateValue = arAutoInc
-      FieldName = 'NumPedido'
-      Origin = 'NumPedido'
-      ProviderFlags = [pfInWhere, pfInKey]
-    end
-    object QryPedidoMDataEmisao: TDateField
-      AutoGenerateValue = arDefault
-      FieldName = 'DataEmisao'
-      Origin = 'DataEmisao'
-    end
-    object QryPedidoMFkCodCli: TLargeintField
-      AutoGenerateValue = arDefault
-      FieldName = 'FkCodCli'
-      Origin = 'FkCodCli'
-    end
-    object QryPedidoMValorTotal: TBCDField
-      AutoGenerateValue = arDefault
-      FieldName = 'ValorTotal'
-      Origin = 'ValorTotal'
-      Precision = 15
-      Size = 2
-    end
   end
   object QryPedidoD: TFDQuery
-    MasterSource = FrmManutPedidos.DSMas
+    IndexFieldNames = 'FkNumeroPedido'
+    MasterSource = DSMas
     MasterFields = 'NumPedido'
+    DetailFields = 'FkNumeroPedido'
     Connection = FDConnection
     Transaction = FDTransaction
     UpdateTransaction = FDTransaction
     FetchOptions.AssignedValues = [evCache]
     FetchOptions.Cache = [fiBlobs, fiMeta]
     SQL.Strings = (
-      '')
+      'SELECT '
+      '   D.Autoincrem , '
+      '   D.FkNumeroPedido,'
+      '   D.FkCodProd As CodProduto,  '
+      '   P.Descricao, '
+      '  D.Qtd, '
+      '  D.VlrUnitario, '
+      '  D.VlrTotal As Total '
+      'FROM '
+      '  pedidosprodutos D'
+      'INNER JOIN '
+      '  produtos P ON (P.PkCodProd = D.FkCodProd)'
+      'WHERE  '
+      '  D.FkNumeroPedido  =  :NumPedido ')
     Left = 288
     Top = 96
-    object QryPedidoDAutoincrem: TLargeintField
-      AutoGenerateValue = arAutoInc
-      FieldName = 'Autoincrem'
-      Origin = 'Autoincrem'
-      ProviderFlags = [pfInWhere, pfInKey]
-    end
-    object QryPedidoDFkNumeroPedido: TLargeintField
-      AutoGenerateValue = arDefault
-      FieldName = 'FkNumeroPedido'
-      Origin = 'FkNumeroPedido'
-    end
-    object QryPedidoDFkCodProd: TLargeintField
-      AutoGenerateValue = arDefault
-      FieldName = 'FkCodProd'
-      Origin = 'FkCodProd'
-    end
-    object QryPedidoDQtd: TIntegerField
-      AutoGenerateValue = arDefault
-      FieldName = 'Qtd'
-      Origin = 'Qtd'
-    end
-    object QryPedidoDVlrUnitario: TBCDField
-      AutoGenerateValue = arDefault
-      FieldName = 'VlrUnitario'
-      Origin = 'VlrUnitario'
-      Precision = 15
-      Size = 2
-    end
-    object QryPedidoDVlrTotal: TBCDField
-      AutoGenerateValue = arDefault
-      FieldName = 'VlrTotal'
-      Origin = 'VlrTotal'
-      Precision = 15
-      Size = 2
-    end
+    ParamData = <
+      item
+        Name = 'NUMPEDIDO'
+        DataType = ftLargeint
+        ParamType = ptInput
+        Value = 3
+      end>
+  end
+  object DSMas: TDataSource
+    DataSet = QryPedidoM
+    Left = 344
+    Top = 32
+  end
+  object DSDet: TDataSource
+    DataSet = QryPedidoD
+    Left = 344
+    Top = 96
+  end
+  object QryDelPedido: TFDQuery
+    Connection = FDConnection
+    Left = 280
+    Top = 160
   end
 end

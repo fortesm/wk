@@ -19,16 +19,9 @@ type
     FDPhysMySQLDriverLink: TFDPhysMySQLDriverLink;
     QryPedidoM: TFDQuery;
     QryPedidoD: TFDQuery;
-    QryPedidoMNumPedido: TLargeintField;
-    QryPedidoMDataEmisao: TDateField;
-    QryPedidoMFkCodCli: TLargeintField;
-    QryPedidoMValorTotal: TBCDField;
-    QryPedidoDAutoincrem: TLargeintField;
-    QryPedidoDFkNumeroPedido: TLargeintField;
-    QryPedidoDFkCodProd: TLargeintField;
-    QryPedidoDQtd: TIntegerField;
-    QryPedidoDVlrUnitario: TBCDField;
-    QryPedidoDVlrTotal: TBCDField;
+    DSMas: TDataSource;
+    DSDet: TDataSource;
+    QryDelPedido: TFDQuery;
   private
     { Private declarations }
   public
