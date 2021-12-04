@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Buttons, System.Actions, Vcl.ActnList;
 
 type
   TFrmPrincipal = class(TForm)
@@ -16,8 +17,14 @@ type
     Panel1: TPanel;
     Label1: TLabel;
     Label2: TLabel;
+    SpeedButton1: TSpeedButton;
+    BitBtn1: TBitBtn;
+    BalloonHint: TBalloonHint;
+    EditURL: TEdit;
+    SpeedButton2: TSpeedButton;
     procedure PedidodeVendas1Click(Sender: TObject);
     procedure ManutenodePedidos1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,6 +43,11 @@ Uses View.PedidoVendas, View.SelCliente, View.ManutPedidos;
 procedure TFrmPrincipal.PedidodeVendas1Click(Sender: TObject);
 begin
   FrmSelCliente.ShowModal;
+end;
+
+procedure TFrmPrincipal.SpeedButton2Click(Sender: TObject);
+begin
+  EditURL.CopyToClipboard;
 end;
 
 procedure TFrmPrincipal.ManutenodePedidos1Click(Sender: TObject);

@@ -32,16 +32,16 @@ implementation
 
 {$R *.dfm}
 
-uses Consultas, View.PedidoVendas;
+uses View.PedidoVendas, ClassClientes;
 
 procedure TFrmSelCliente.FormCreate(Sender: TObject);
 begin Achou := False; end;
 
 procedure TFrmSelCliente.BtBuscaCliClick(Sender: TObject);
-var Cons : TConsulta;
+var Cons : TClientes;
     Cliente : TStringList;
 begin
-  Cons := TConsulta.Create;
+  Cons := TClientes.Create;
   Cliente := TStringList.Create;
   try
     Cliente := Cons.SelectCliente(Trim(EdCodCli.Text));
@@ -66,6 +66,8 @@ begin
       with FrmPedidoVendas do begin
            LbCodCli.Caption := Trim(EdCodCli.Text);
            LbCliente.Caption := LbNomeCliente.Caption;
+           Modo := 'I';
+           LimpaTela(FrmPedidoVendas.StringGrid);
            ShowModal;
       end;
    end;
@@ -78,6 +80,7 @@ begin
      EdCodCli.Enabled := True;
      EdCodCli.Clear;
      LbNomeCliente.Caption := '';
+     EdCodCli.SetFocus;
   end;
 end;
 

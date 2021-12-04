@@ -20,11 +20,11 @@ object FrmPedidoVendas: TFrmPedidoVendas
   object LbSubTotal: TLabel
     Left = 743
     Top = 481
-    Width = 6
-    Height = 23
+    Width = 7
+    Height = 29
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
-    Font.Height = -19
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -54,12 +54,12 @@ object FrmPedidoVendas: TFrmPedidoVendas
   object Label1: TLabel
     Left = 24
     Top = 11
-    Width = 123
-    Height = 23
+    Width = 153
+    Height = 29
     Caption = 'Cod. Cliente:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
+    Font.Color = clRed
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -67,51 +67,51 @@ object FrmPedidoVendas: TFrmPedidoVendas
   object Label2: TLabel
     Left = 544
     Top = 11
-    Width = 74
-    Height = 23
+    Width = 92
+    Height = 29
     Caption = 'Cliente:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
+    Font.Color = clRed
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LbCodCli: TLabel
-    Left = 153
-    Top = 11
-    Width = 85
-    Height = 23
+    Left = 178
+    Top = 12
+    Width = 105
+    Height = 29
     Caption = 'LbCodCli'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
+    Font.Color = clRed
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LbCliente: TLabel
-    Left = 624
+    Left = 638
     Top = 11
-    Width = 90
-    Height = 23
+    Width = 112
+    Height = 29
     Caption = 'LbCliente'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
+    Font.Color = clRed
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 620
+    Left = 580
     Top = 481
-    Width = 117
-    Height = 23
+    Width = 145
+    Height = 29
     Caption = 'SubTotal R$'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
+    Font.Color = clRed
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -121,11 +121,11 @@ object FrmPedidoVendas: TFrmPedidoVendas
     Top = 40
     Width = 921
     Height = 73
-    Caption = 'GroupBox1'
+    Caption = 'Busca do Produto:'
     TabOrder = 0
     object BtBuscaProd: TSpeedButton
       Left = 813
-      Top = 20
+      Top = 34
       Width = 100
       Height = 33
       Caption = 'Busca produto'
@@ -160,7 +160,7 @@ object FrmPedidoVendas: TFrmPedidoVendas
     end
     object EdCod: TLabeledEdit
       Left = 11
-      Top = 32
+      Top = 41
       Width = 78
       Height = 21
       EditLabel.Width = 74
@@ -170,7 +170,7 @@ object FrmPedidoVendas: TFrmPedidoVendas
     end
     object EdDesc: TLabeledEdit
       Left = 95
-      Top = 32
+      Top = 41
       Width = 618
       Height = 21
       EditLabel.Width = 46
@@ -180,7 +180,7 @@ object FrmPedidoVendas: TFrmPedidoVendas
     end
     object EdPreco: TLabeledEdit
       Left = 719
-      Top = 32
+      Top = 41
       Width = 88
       Height = 21
       EditLabel.Width = 75

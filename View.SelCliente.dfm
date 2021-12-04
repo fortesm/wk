@@ -3,8 +3,8 @@ object FrmSelCliente: TFrmSelCliente
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Selecionar Cliente para o pedido de produtos'
-  ClientHeight = 211
-  ClientWidth = 391
+  ClientHeight = 205
+  ClientWidth = 383
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

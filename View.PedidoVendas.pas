@@ -36,9 +36,14 @@ type
   private
     { Private declarations }
     Cont : Integer;
-     procedure GridDeleteRow(RowNumber: Integer; Grid: TstringGrid);
+    procedure SetaGrid;
+    procedure GridDeleteRow(RowNumber: Integer; Grid: TstringGrid);
+    function CalcSubTotal : String;
   public
     { Public declarations }
+    Modo : Char;     //I : Insert U : Update
+    CodPed : String; //Para saber qual nº para o Update
+    procedure LimpaTela(Grid: TstringGrid);
   end;
 
 var
@@ -46,15 +51,19 @@ var
 
 implementation
 
-Uses Consultas, UDMPrincipal;
+Uses ClassClientes, ClassProdutos, ClassPedidos, UDMPrincipal;
 
 {$R *.dfm}
 
 procedure TFrmPedidoVendas.FormShow(Sender: TObject);
-begin  Cont := 0; end;
-
-procedure TFrmPedidoVendas.FormCreate(Sender: TObject);
 begin
+   Cont := 0;
+   StringGridSetEditText(StringGrid,0,0,'');
+ end;
+
+procedure TFrmPedidoVendas.SetaGrid;
+begin
+ StringGrid.FixedRows := 1  ;
   StringGrid.ColWidths[0] := 50;
   StringGrid.ColWidths[1] := 650;
   StringGrid.ColWidths[2] := 70;
@@ -66,16 +75,19 @@ begin
   StringGrid.Cells[4, 0] := 'Total';
 end;
 
+procedure TFrmPedidoVendas.FormCreate(Sender: TObject);
+begin SetaGrid; end;
+
 procedure TFrmPedidoVendas.BtBuscaProdClick(Sender: TObject);
 begin
   var produto : TStringList;
   var InputStr := InputBox('buscar produto', 'Digite o código ou nome do produto','');
-  var cons : TConsulta;
+  var cons : TProdutos;
 
-  Cons := TConsulta.Create;   // Instancia o objeto que retorna os registros dos produtos
+  Cons := TProdutos.Create;   // Instancia o objeto que retorna os registros dos produtos
   Produto := TStringList.Create;
   try
-    Produto := Cons.SelectProd(InputStr);
+    Produto := Cons.SelectProduto(InputStr);
     if produto.Count <> 0 then begin
       EdCod.Text   := Produto[0];
       EdDesc.Text  := Produto[1];
@@ -89,15 +101,13 @@ end;
 
 procedure TFrmPedidoVendas.BtInsereProdClick(Sender: TObject);
 begin   // insere produto na Grid
-    if Cont = 0 then
-    begin
+    if Cont = 0 then begin
        Inc(Cont);
        StringGrid.Cells[0, StringGrid.RowCount -1] := EdCod.Text ;
        StringGrid.Cells[1, StringGrid.RowCount -1] := EdDesc.Text ;
        StringGrid.Cells[2, StringGrid.RowCount -1] := EdPreco.Text ;
     end
-    else
-    begin
+    else begin
        StringGrid.RowCount := StringGrid.RowCount + 1;
        StringGrid.Cells[0, StringGrid.RowCount -1] := EdCod.Text ;
        StringGrid.Cells[1, StringGrid.RowCount -1] := EdDesc.Text ;
@@ -105,49 +115,62 @@ begin   // insere produto na Grid
      end;
 end;
 
+function TFrmPedidoVendas.CalcSubTotal : String;  //Calcula o Subtotal
+var j : Integer;
+    S : string;
+    SubTotal : Currency;
+begin
+   SubTotal := 0;
+   S :='';
+
+   for j := 1 to StringGrid.RowCount -1 do
+   begin
+     S := StringGrid.Cells[4,j];
+     if S = '' then
+        S := '0';
+     SubTotal := SubTotal + StrToFloat(StringReplace(S, '.', '', [rfReplaceAll]));
+   end;
+   Result := FormatCurr('##,###,##0.00', SubTotal);
+end;
+
 procedure TFrmPedidoVendas.StringGridSetEditText(Sender: TObject; ACol,
   ARow: Integer; const Value: string);  // Calcula o total
 var
-   SubTotal, Vlr : Currency;
-   qtd, i : integer;
-   S : string;
+   Vlr : Currency;
+   Qtd : integer;
 begin
-   SubTotal := 0;
    if (ACol = 3) then
    begin
       if Value <> '' then
          begin
-            Vlr := StrToFloat(StringGrid.Cells[2, ARow]);
-            qtd := StrToInt(StringGrid.Cells[3, ARow]);
-            Vlr := Vlr * qtd;
-            StringGrid.Cells[4, ARow] := FormatFloat('##,###,##0.00', Vlr);
+            Vlr := StrToCurr(StringReplace(StringGrid.Cells[2, ARow], '.', '', [rfReplaceAll]));
+            Qtd := StrToInt(StringGrid.Cells[3, ARow]);
+            Vlr := Vlr * Qtd;
+            StringGrid.Cells[4, ARow] := FormatCurr('##,###,##0.00', Vlr);
          end
       else
          StringGrid.Cells[4, ARow] := '';
    end;
-                                      //  Calcula sub total
-   for i := 1 to StringGrid.RowCount -1 do
-   begin
-     S := StringGrid.Cells[4,i];
-     if S = '' then  S := '0';
-     SubTotal := SubTotal + StrToFloat(S);
-   end;
-   LbSubTotal.Caption := FormatFloat('##,###,##0.00', SubTotal);
+   LbSubTotal.Caption := CalcSubTotal;
 end;
 
 procedure TFrmPedidoVendas.StringGridKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-   if key = VK_DELETE then //Se a tecla Delete for pressionada, deleta linha
+   if Modo = 'I' then
    begin
-     if Application.MessageBox('Deseja Mesmo Excluir a linha atual?',
-       PChar('Apagar Registro'), MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2) =
-       IDYES then
+     if key = VK_DELETE then //Se a tecla Delete for pressionada, deleta linha
      begin
-        GridDeleteRow(StringGrid.Row, StringGrid);
-        StringGridSetEditText(Self,4,1,'s');
+       if Application.MessageBox('Deseja Mesmo Excluir a linha atual?',
+         PChar('Apagar Registro'), MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2) =
+         IDYES then
+       begin
+          GridDeleteRow(StringGrid.Row, StringGrid);
+          StringGridSetEditText(Self,4,1,'s');
+       end;
      end;
-   end;
+   end
+   else ShowMessage('Você não pode excluir um registro no modo de edição para excluir um pedido para a manutenção de pedidos...');
 end;
 
 procedure TFrmPedidoVendas.GridDeleteRow(RowNumber: Integer; Grid: TstringGrid);
@@ -164,20 +187,51 @@ begin
   end;
 end;
 
+procedure TFrmPedidoVendas.LimpaTela(Grid: TstringGrid);
+begin
+  for var c := 0 to Pred(Grid.ColCount) do
+    for var r := 0 to Pred(Grid.RowCount) do
+      Grid.Cells[c, r] := '';
+
+  Grid.RowCount := 2;
+  SetaGrid;
+
+  EdCod.Clear;
+  EdDesc.Clear;
+  EdPreco.Clear;
+end;
 
 procedure TFrmPedidoVendas.BtGravarClick(Sender: TObject);  // Gravar o Pedido
 var  Cons : TConsulta;
 begin
-   Cons  := TConsulta.Create;
-   try
-     if Cons.InsertPedido(StrToInt(LbCodCli.Caption),StrToCurr(LbSubTotal.Caption )) then
-        ShowMessage('Valor Gravado com sucesso')
-     else
-       ShowMessage('Falha ao gravar')
-   finally
-     FreeAndNil(Cons);
+   case Modo of
+      'I':
+       begin
+          Cons  := TConsulta.Create;
+          try
+            if Cons.InsertPedido(StrToInt(LbCodCli.Caption),StrToCurr(StringReplace(LbSubTotal.Caption, '.', '', [rfReplaceAll]))) then
+               ShowMessage('Valor Gravado com sucesso')
+            else
+               ShowMessage('Falha ao gravar')
+          finally
+            FreeAndNil(Cons);
+          end;
+       end;
+
+       'U':
+       begin  //update
+          Cons  := TConsulta.Create;
+          try
+            if Cons.UpdatePedido(StrToInt(LbCodCli.Caption),StrToCurr(StringReplace(LbSubTotal.Caption, '.', '', [rfReplaceAll])), CodPed) then
+               ShowMessage('Valor Atualizado com sucesso')
+            else
+               ShowMessage('Falha ao gravar')
+          finally
+            FreeAndNil(Cons);
+          end;
+       end;
    end;
 end;
 
-
 end.
+
